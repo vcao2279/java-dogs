@@ -45,6 +45,7 @@ new Dogs("Corgie", 35, true);
 5. Create the repository class . 
 6. Create the ResourceAssembler class . 
 7. Create the Controller class . 
+8. Create the ItemNotFoundException class .  
 8. Now you can finally expose your endpoints!
 
 ## Stretch goal and not necessary for MVP  
