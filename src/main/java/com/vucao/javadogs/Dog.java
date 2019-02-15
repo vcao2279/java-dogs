@@ -1,12 +1,10 @@
 package com.vucao.javadogs;
 
 import lombok.Data;
-import lombok.Generated;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Data
 @Entity
