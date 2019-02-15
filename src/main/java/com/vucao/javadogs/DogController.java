@@ -56,4 +56,17 @@ public class DogController
 
         return new Resources<>(dogs, linkTo(methodOn(DogController.class).allBreeds()).withRel("breeds"));
     }
+
+    @GetMapping("/weight")
+    public Resources<Resource<Dog>> allWeights()
+    {
+        List<Resource<Dog>> dogs = dogrepos.findAll()
+                .stream()
+                .sorted((d1, d2) -> Double.compare(d2.getWeight(),d1.getWeight()))
+                .map(assembler::toResource)
+                .collect(Collectors.toList());
+
+        return new Resources<>(dogs, linkTo(methodOn(DogController.class).allWeights()).withRel("wight"));
+    }
+
 }

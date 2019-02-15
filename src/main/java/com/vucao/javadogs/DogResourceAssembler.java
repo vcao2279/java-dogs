@@ -16,7 +16,8 @@ public class DogResourceAssembler implements ResourceAssembler<Dog, Resource<Dog
         return new Resource<Dog>(dog,
                 linkTo(methodOn(DogController.class).findOne(dog.getId())).withSelfRel(),
                 linkTo(methodOn(DogController.class).all()).withRel("dogs"),
-                linkTo(methodOn(DogController.class).allBreeds()).withRel("breeds")
+                linkTo(methodOn(DogController.class).allBreeds()).withRel("breeds"),
+                linkTo(methodOn(DogController.class).allWeights()).withRel("weight")
         );
     }
 }
