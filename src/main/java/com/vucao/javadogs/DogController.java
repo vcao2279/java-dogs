@@ -110,4 +110,13 @@ public class DogController
                 .created(new URI(resource.getId().expand().getHref()))
                 .body(resource);
     }
+
+    @DeleteMapping("/dogs/{id}")
+    public ResponseEntity<?> deleteDog(@PathVariable Long id)
+    {
+        dogrepos.deleteById(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
 }
