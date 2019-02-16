@@ -77,4 +77,15 @@ public class DogController
 
         return new Resources<>(dogs);
     }
+
+    @GetMapping("/apartment")
+    public Resources<Resource<Dog>> findByApartment()
+    {
+        List<Resource<Dog>> dogs = dogrepos.findByIsApartmentSuitable(true)
+                .stream()
+                .map(assembler::toResource)
+                .collect(Collectors.toList());
+
+        return new Resources<>(dogs);
+    }
 }
