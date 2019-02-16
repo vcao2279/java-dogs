@@ -45,9 +45,8 @@ public class DogController
     @GetMapping("/breeds")
     public Resources<Resource<Dog>> allBreeds()
     {
-        List<Resource<Dog>> dogs = dogrepos.findAll()
+        List<Resource<Dog>> dogs = dogrepos.findAllByOrderByBreedAsc()
                 .stream()
-                .sorted((d1, d2) -> d1.getBreed().compareToIgnoreCase(d2.getBreed()))
                 .map(assembler::toResource)
                 .collect(Collectors.toList());
 
@@ -57,9 +56,8 @@ public class DogController
     @GetMapping("/weight")
     public Resources<Resource<Dog>> allWeights()
     {
-        List<Resource<Dog>> dogs = dogrepos.findAll()
+        List<Resource<Dog>> dogs = dogrepos.findAllByOrderByWeightDesc()
                 .stream()
-                .sorted((d1, d2) -> Double.compare(d2.getWeight(),d1.getWeight()))
                 .map(assembler::toResource)
                 .collect(Collectors.toList());
 
@@ -69,9 +67,8 @@ public class DogController
     @GetMapping("/breeds/{breed}")
     public Resources<Resource<Dog>> findBreed(@PathVariable String breed)
     {
-        List<Resource<Dog>> dogs = dogrepos.findAll()
+        List<Resource<Dog>> dogs = dogrepos.findByBreed(breed)
                 .stream()
-                .filter(d -> Objects.equals(d.getBreed(),breed))
                 .map(assembler::toResource)
                 .collect(Collectors.toList());
 
