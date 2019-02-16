@@ -1,12 +1,13 @@
 package com.vucao.javadogs;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -84,5 +85,29 @@ public class DogController
                 .collect(Collectors.toList());
 
         return new Resources<>(dogs);
+    }
+
+    @PutMapping("/dogs/{id}")
+    public ResponseEntity<?> updateDog(@RequestBody Dog newDog, @PathVariable Long id)
+        throws URISyntaxException
+    {
+        Dog updatedDog = dogrepos.findById(id)
+                .map(dog ->
+                {
+                    dog.setBreed(newDog.getBreed());
+                    dog.setWeight(newDog.getWeight());
+                    dog.setApartmentSuitable(newDog.isApartmentSuitable());
+                    return dogrepos.save(dog);
+                }).orElseGet(()->
+                {
+                    newDog.setId(id);
+                    return dogrepos.save(newDog);
+                });
+
+        Resource<Dog> resource = assembler.toResource(updatedDog);
+
+        return ResponseEntity
+                .created(new URI(resource.getId().expand().getHref()))
+                .body(resource);
     }
 }
