@@ -119,4 +119,15 @@ public class DogController
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/dogs")
+    public ResponseEntity<?> addDog(@RequestBody Dog newDog)
+            throws URISyntaxException
+    {
+        dogrepos.save(newDog);
+        Resource<Dog> resource = assembler.toResource(newDog);
+
+        return ResponseEntity
+                .created(new URI(resource.getId().expand().getHref()))
+                .body(resource);
+    }
 }
